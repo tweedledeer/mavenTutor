@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>knowledge-base</groupId>
+    <artifactId>maven-tutor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <!-- Spring boot main class -->
+        <start-class>com.PATH_TO_MAIN.Main</start-class>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-parent</artifactId>
+            <version>1.5.8.RELEASE</version>
+            <type>pom</type>
+            <!--<scope>provided</scope>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>slf4j</groupId>
+                    <!--<groupId>*</groupId>-->
+                    <!--<artifactId>*</artifactId>-->
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j:</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.6</version>
+            <!--<scope>provided</scope>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion><exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+            <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.12.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>1.5.7.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.5.7.RELEASE</version>
+            <!--<scope>provided</scope>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jul-to-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-maven</artifactId>
+            <version>1.16.12</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/lombok.jar</systemPath>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.20.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>10</threadCount>
+                </configuration>
+            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-jar-plugin</artifactId>-->
+            <!--<version>2.4</version>-->
+            <!--<configuration>-->
+            <!--<archive>-->
+            <!--<manifest>-->
+            <!--<mainClass>app.Application</mainClass>-->
+            <!--<addClasspath>true</addClasspath>-->
+            <!--<classpathPrefix>dependency-jars/</classpathPrefix>-->
+            <!--</manifest>-->
+            <!--</archive>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>id.pre-clean</id>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>
+                                run
+                            </goal>
+
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>This is pre-clean antRun task</echo>
+                            </tasks>
+                        </configuration>
+
+                    </execution>
+                    <execution>
+                        <id>id.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>
+                                run
+                            </goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>Clean phase execution for antRun plugin</echo>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>id.post-clean</id>
+                        <phase>post-clean</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo>Executing post-clean phase for antRun for ${project.build}
+                                </echo>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <manifestEntries>
+                                    <Main-Class>app.Application</Main-Class>
+                                </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.8.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-version</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <!-- exclude all versions lower than 1.2.17-->
+                                        <exclude>log4j:log4j:[0.0,1.2.17)</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+
+    </build>
+    <profiles>
+        <profile>
+            <id>myprofile</id>
+            <activation>
+                <file>
+                    <missing>/Users/gkarabut/src/maventutor/src/main/java/app/Application1.java
+                    </missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>id.pre-clean</id>
+                                <phase>pre-clean</phase>
+                                <goals>
+                                    <goal>
+                                        run
+                                    </goal>
+
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>This is pre-clean antRun task balah
+                                            ${project.basedir}}
+                                        </echo>
+                                    </tasks>
+
+                                </configuration>
+
+                            </execution>
+                            <!--<execution>-->
+                                <!--<id>mytest</id>-->
+                                <!--<phase>test</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>-->
+                                        <!--run-->
+                                    <!--</goal>-->
+                                <!--</goals>-->
+                                <!--<configuration>-->
+                                    <!--<tasks>-->
+                                        <!--<echo>Copying file from src to test: profile myprofile-->
+                                        <!--</echo>-->
+                                        <!--<copy file="/Users/gkarabut/src/maventutor/src/main/java/app/Application.java"-->
+                                              <!--toFile="${project.build.outputDirectory}/app.java"/>-->
+
+                                    <!--</tasks>-->
+                                <!--</configuration>-->
+                            <!--</execution>-->
+                            <execution>
+                                <id>id.clean</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>
+                                        run
+                                    </goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>Clean phase execution for antRun plugin
+                                            ${project.build}}
+                                        </echo>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>id.post-clean</id>
+                                <phase>post-clean</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>Executing post-clean phase for antRun</echo>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>profile2</id>
+            <activation>
+                <file>
+                    <missing>/Users/gkarabut/src/maventutor/src/main/java/app/Application.java
+                    </missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>id.pre-clean</id>
+                                <phase>pre-clean</phase>
+                                <goals>
+                                    <goal>
+                                        run
+                                    </goal>
+
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>This is pre-clean antRun task balah
+                                            ${project.basedir}}
+                                        </echo>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>id.test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>
+                                        run
+                                    </goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>Profile is profile2</echo>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+
+            </build>
+
+        </profile>
+    </profiles>
+
+
+</project>

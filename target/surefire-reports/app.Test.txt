@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: app.Test
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.008 s <<< FAILURE! - in app.Test
+myTest(app.Test)  Time elapsed: 0.008 s  <<< FAILURE!
+java.lang.AssertionError: Fail message
+	at app.Test.myTest(Test.java:16)
+
